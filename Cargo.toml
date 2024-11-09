@@ -1,0 +1,22 @@
+[package]
+name = "opentelemetry-micropb"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "MIT"
+
+[features]
+# uncomment during development
+# default = ["use_std", "use_bumpalo", "codegen"]
+default = ["use_std", "use_bumpalo"]
+use_std = ["micropb"]
+use_bumpalo = ["bumpalo"]
+
+codegen = ["micropb-gen"]
+
+[dependencies]
+micropb = { version = "0.1.0", features = ["std"], optional = true }
+micropb-gen = { version = "0.1.0", optional = true }
+# micropb = { path = "../../micropb/micropb", features = ["std"], optional = true }
+# micropb-gen = { path = "../../micropb/micropb-gen", default-features = false, optional = true }
+bumpalo = { version = "3.9", features = ["collections"], optional = true }
