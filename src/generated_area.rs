@@ -409,13 +409,13 @@ pub mod opentelemetry_ {
                     /// in which case this AnyValue is considered to be "empty".
                     #[derive(Debug, PartialEq)]
                     pub enum Value {
-                        StringValue(::std::string::String),
+                        StringValue(crate::area::AreaString),
                         BoolValue(bool),
                         IntValue(i64),
                         DoubleValue(f64),
                         ArrayValue(super::ArrayValue),
                         KvlistValue(super::KeyValueList),
-                        BytesValue(::std::vec::Vec<u8>),
+                        BytesValue(crate::area::AreaBytes),
                         /// Reference to the string value in ProfilesDictionary.string_table.
                         ///
                         /// Note: This is currently used exclusively in the Profiling signal.
@@ -434,7 +434,7 @@ pub mod opentelemetry_ {
                 #[derive(Debug, Default, PartialEq)]
                 pub struct ArrayValue {
                     /// Array of values. The array may be empty (contain 0 elements).
-                    pub r#values: ::std::vec::Vec<AnyValue>,
+                    pub r#values: crate::area::AreaVec<AnyValue>,
                 }
                 impl ArrayValue {}
                 impl ::micropb::MessageDecode for ArrayValue {
@@ -529,7 +529,7 @@ pub mod opentelemetry_ {
                     /// The keys MUST be unique (it is not allowed to have more than one
                     /// value with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#values: ::std::vec::Vec<KeyValue>,
+                    pub r#values: crate::area::AreaVec<KeyValue>,
                 }
                 impl KeyValueList {}
                 impl ::micropb::MessageDecode for KeyValueList {
@@ -617,7 +617,7 @@ pub mod opentelemetry_ {
                 pub struct KeyValue {
                     /// The key name of the pair.
                     /// key_strindex MUST NOT be set if key is used.
-                    pub r#key: ::std::string::String,
+                    pub r#key: crate::area::AreaString,
                     /// The value of the pair.
                     ///
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
@@ -649,26 +649,26 @@ pub mod opentelemetry_ {
                 impl KeyValue {
                     /// Return a reference to `key`
                     #[inline]
-                    pub fn r#key(&self) -> &::std::string::String {
+                    pub fn r#key(&self) -> &crate::area::AreaString {
                         &self.r#key
                     }
                     /// Return a mutable reference to `key`
                     #[inline]
-                    pub fn mut_key(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_key(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#key
                     }
                     /// Set the value of `key`
                     #[inline]
                     pub fn set_key(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#key = value.into();
                         self
                     }
                     /// Builder method that sets the value of `key`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_key(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_key(mut self, value: crate::area::AreaString) -> Self {
                         self.r#key = value.into();
                         self
                     }
@@ -923,15 +923,15 @@ pub mod opentelemetry_ {
                 pub struct InstrumentationScope {
                     /// A name denoting the Instrumentation scope.
                     /// An empty instrumentation scope name means the name is unknown.
-                    pub r#name: ::std::string::String,
+                    pub r#name: crate::area::AreaString,
                     /// Defines the version of the instrumentation scope.
                     /// An empty instrumentation scope version means the version is unknown.
-                    pub r#version: ::std::string::String,
+                    pub r#version: crate::area::AreaString,
                     /// Additional attributes that describe the scope. [Optional].
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<KeyValue>,
+                    pub r#attributes: crate::area::AreaVec<KeyValue>,
                     /// The number of attributes that were discarded. Attributes
                     /// can be discarded because their keys are too long or because there are too many
                     /// attributes. If this value is 0, then no attributes were dropped.
@@ -940,51 +940,54 @@ pub mod opentelemetry_ {
                 impl InstrumentationScope {
                     /// Return a reference to `name`
                     #[inline]
-                    pub fn r#name(&self) -> &::std::string::String {
+                    pub fn r#name(&self) -> &crate::area::AreaString {
                         &self.r#name
                     }
                     /// Return a mutable reference to `name`
                     #[inline]
-                    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_name(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#name
                     }
                     /// Set the value of `name`
                     #[inline]
                     pub fn set_name(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#name = value.into();
                         self
                     }
                     /// Builder method that sets the value of `name`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_name(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_name(mut self, value: crate::area::AreaString) -> Self {
                         self.r#name = value.into();
                         self
                     }
                     /// Return a reference to `version`
                     #[inline]
-                    pub fn r#version(&self) -> &::std::string::String {
+                    pub fn r#version(&self) -> &crate::area::AreaString {
                         &self.r#version
                     }
                     /// Return a mutable reference to `version`
                     #[inline]
-                    pub fn mut_version(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_version(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#version
                     }
                     /// Set the value of `version`
                     #[inline]
                     pub fn set_version(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#version = value.into();
                         self
                     }
                     /// Builder method that sets the value of `version`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_version(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_version(
+                        mut self,
+                        value: crate::area::AreaString,
+                    ) -> Self {
                         self.r#version = value.into();
                         self
                     }
@@ -1211,37 +1214,39 @@ pub mod opentelemetry_ {
                     /// the schema_url applies to.
                     ///
                     /// This field obsoletes the schema_url field in ResourceMetrics/ResourceSpans/ResourceLogs.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Defines the type of the entity. MUST not change during the lifetime of the entity.
                     /// For example: "service" or "host". This field is required and MUST not be empty
                     /// for valid entities.
-                    pub r#type: ::std::string::String,
+                    pub r#type: crate::area::AreaString,
                     /// Attribute Keys that identify the entity.
                     /// MUST not change during the lifetime of the entity. The Id must contain at least one attribute.
                     /// These keys MUST exist in the containing {message}.attributes.
-                    pub r#id_keys: ::std::vec::Vec<::std::string::String>,
+                    pub r#id_keys: crate::area::AreaVec<crate::area::AreaString>,
                     /// Descriptive (non-identifying) attribute keys of the entity.
                     /// MAY change over the lifetime of the entity. MAY be empty.
                     /// These attribute keys are not part of entity's identity.
                     /// These keys MUST exist in the containing {message}.attributes.
-                    pub r#description_keys: ::std::vec::Vec<::std::string::String>,
+                    pub r#description_keys: crate::area::AreaVec<
+                        crate::area::AreaString,
+                    >,
                 }
                 impl EntityRef {
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -1250,33 +1255,33 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
                     }
                     /// Return a reference to `type`
                     #[inline]
-                    pub fn r#type(&self) -> &::std::string::String {
+                    pub fn r#type(&self) -> &crate::area::AreaString {
                         &self.r#type
                     }
                     /// Return a mutable reference to `type`
                     #[inline]
-                    pub fn mut_type(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_type(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#type
                     }
                     /// Set the value of `type`
                     #[inline]
                     pub fn set_type(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#type = value.into();
                         self
                     }
                     /// Builder method that sets the value of `type`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_type(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_type(mut self, value: crate::area::AreaString) -> Self {
                         self.r#type = value.into();
                         self
                     }
@@ -1308,7 +1313,7 @@ pub mod opentelemetry_ {
                                     };
                                 }
                                 3u32 => {
-                                    let mut val: ::std::string::String = ::core::default::Default::default();
+                                    let mut val: crate::area::AreaString = ::core::default::Default::default();
                                     let mut_ref = &mut val;
                                     {
                                         decoder
@@ -1322,7 +1327,7 @@ pub mod opentelemetry_ {
                                     }
                                 }
                                 4u32 => {
-                                    let mut val: ::std::string::String = ::core::default::Default::default();
+                                    let mut val: crate::area::AreaString = ::core::default::Default::default();
                                     let mut_ref = &mut val;
                                     {
                                         decoder
@@ -1486,7 +1491,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// The number of dropped attributes. If the value is 0, then
@@ -1497,7 +1502,7 @@ pub mod opentelemetry_ {
                     /// Note: keys in the references MUST exist in attributes of this message.
                     ///
                     /// Status: [Development]
-                    pub r#entity_refs: ::std::vec::Vec<
+                    pub r#entity_refs: crate::area::AreaVec<
                         super::super::common_::v1_::EntityRef,
                     >,
                 }
@@ -1703,7 +1708,7 @@ pub mod opentelemetry_ {
                     /// one element. Intermediary nodes that receive data from multiple origins
                     /// typically batch the data before forwarding further and in that case this
                     /// array will contain multiple elements.
-                    pub r#resource_logs: ::std::vec::Vec<ResourceLogs>,
+                    pub r#resource_logs: crate::area::AreaVec<ResourceLogs>,
                 }
                 impl LogsData {}
                 impl ::micropb::MessageDecode for LogsData {
@@ -1794,14 +1799,14 @@ pub mod opentelemetry_ {
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
                     pub r#resource: super::super::resource_::v1_::Resource,
                     /// A list of ScopeLogs that originate from a resource.
-                    pub r#scope_logs: ::std::vec::Vec<ScopeLogs>,
+                    pub r#scope_logs: crate::area::AreaVec<ScopeLogs>,
                     /// The Schema URL, if known. This is the identifier of the Schema that the resource data
                     /// is recorded in. Notably, the last part of the URL path is the version number of the
                     /// schema: http[s]://server[:port]/path/<version>. To learn more about Schema URL see
                     /// https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
                     /// This schema_url applies to the data in the "resource" field. It does not apply
                     /// to the data in the "scope_logs" field which have their own schema_url field.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: ResourceLogs_::_Hazzer,
                 }
@@ -1872,19 +1877,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -1893,7 +1898,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
@@ -2100,14 +2105,14 @@ pub mod opentelemetry_ {
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
                     pub r#scope: super::super::common_::v1_::InstrumentationScope,
                     /// A list of log records.
-                    pub r#log_records: ::std::vec::Vec<LogRecord>,
+                    pub r#log_records: crate::area::AreaVec<LogRecord>,
                     /// The Schema URL, if known. This is the identifier of the Schema that the log data
                     /// is recorded in. Notably, the last part of the URL path is the version number of the
                     /// schema: http[s]://server[:port]/path/<version>. To learn more about Schema URL see
                     /// https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
                     /// This schema_url applies to the data in the "scope" field and all logs in the
                     /// "log_records" field.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: ScopeLogs_::_Hazzer,
                 }
@@ -2180,19 +2185,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -2201,7 +2206,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
@@ -2425,7 +2430,7 @@ pub mod opentelemetry_ {
                     pub r#severity_number: SeverityNumber,
                     /// The severity text (also known as log level). The original string representation as
                     /// it is known at the source. [Optional].
-                    pub r#severity_text: ::std::string::String,
+                    pub r#severity_text: crate::area::AreaString,
                     /// A value containing the body of the log record. Can be for example a human-readable
                     /// string message (including multi-line) describing the event in a free form or it can
                     /// be a structured data composed of arrays and maps of other values. [Optional].
@@ -2436,7 +2441,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     pub r#dropped_attributes_count: u32,
@@ -2457,7 +2462,7 @@ pub mod opentelemetry_ {
                     /// trace if any of the following is true:
                     ///   - the field is not present,
                     ///   - the field contains an invalid value.
-                    pub r#trace_id: ::std::vec::Vec<u8>,
+                    pub r#trace_id: crate::area::AreaBytes,
                     /// A unique identifier for a span within a trace, assigned when the span
                     /// is created. The ID is an 8-byte array. An ID with all zeroes OR of length
                     /// other than 8 bytes is considered invalid (empty string in OTLP/JSON
@@ -2470,7 +2475,7 @@ pub mod opentelemetry_ {
                     /// span if any of the following is true:
                     ///   - the field is not present,
                     ///   - the field contains an invalid value.
-                    pub r#span_id: ::std::vec::Vec<u8>,
+                    pub r#span_id: crate::area::AreaBytes,
                     /// A unique identifier of event category/type.
                     /// All events with the same event_name are expected to conform to the same
                     /// schema for both their attributes and their body.
@@ -2481,7 +2486,7 @@ pub mod opentelemetry_ {
                     /// as an event.
                     ///
                     /// [Optional].
-                    pub r#event_name: ::std::string::String,
+                    pub r#event_name: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: LogRecord_::_Hazzer,
                 }
@@ -2584,19 +2589,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `severity_text`
                     #[inline]
-                    pub fn r#severity_text(&self) -> &::std::string::String {
+                    pub fn r#severity_text(&self) -> &crate::area::AreaString {
                         &self.r#severity_text
                     }
                     /// Return a mutable reference to `severity_text`
                     #[inline]
-                    pub fn mut_severity_text(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_severity_text(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#severity_text
                     }
                     /// Set the value of `severity_text`
                     #[inline]
                     pub fn set_severity_text(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#severity_text = value.into();
                         self
@@ -2605,7 +2610,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_severity_text(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#severity_text = value.into();
                         self
@@ -2712,69 +2717,75 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `trace_id`
                     #[inline]
-                    pub fn r#trace_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#trace_id(&self) -> &crate::area::AreaBytes {
                         &self.r#trace_id
                     }
                     /// Return a mutable reference to `trace_id`
                     #[inline]
-                    pub fn mut_trace_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_trace_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#trace_id
                     }
                     /// Set the value of `trace_id`
                     #[inline]
                     pub fn set_trace_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#trace_id = value.into();
                         self
                     }
                     /// Builder method that sets the value of `trace_id`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_trace_id(mut self, value: ::std::vec::Vec<u8>) -> Self {
+                    pub fn init_trace_id(
+                        mut self,
+                        value: crate::area::AreaBytes,
+                    ) -> Self {
                         self.r#trace_id = value.into();
                         self
                     }
                     /// Return a reference to `span_id`
                     #[inline]
-                    pub fn r#span_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#span_id(&self) -> &crate::area::AreaBytes {
                         &self.r#span_id
                     }
                     /// Return a mutable reference to `span_id`
                     #[inline]
-                    pub fn mut_span_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_span_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#span_id
                     }
                     /// Set the value of `span_id`
                     #[inline]
                     pub fn set_span_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#span_id = value.into();
                         self
                     }
                     /// Builder method that sets the value of `span_id`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_span_id(mut self, value: ::std::vec::Vec<u8>) -> Self {
+                    pub fn init_span_id(
+                        mut self,
+                        value: crate::area::AreaBytes,
+                    ) -> Self {
                         self.r#span_id = value.into();
                         self
                     }
                     /// Return a reference to `event_name`
                     #[inline]
-                    pub fn r#event_name(&self) -> &::std::string::String {
+                    pub fn r#event_name(&self) -> &crate::area::AreaString {
                         &self.r#event_name
                     }
                     /// Return a mutable reference to `event_name`
                     #[inline]
-                    pub fn mut_event_name(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_event_name(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#event_name
                     }
                     /// Set the value of `event_name`
                     #[inline]
                     pub fn set_event_name(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#event_name = value.into();
                         self
@@ -2783,7 +2794,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_event_name(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#event_name = value.into();
                         self
@@ -3334,7 +3345,7 @@ pub mod opentelemetry_ {
                         /// element. Intermediary nodes (such as OpenTelemetry Collector) that receive
                         /// data from multiple origins typically batch the data before forwarding further and
                         /// in that case this array will contain multiple elements.
-                        pub r#resource_logs: ::std::vec::Vec<
+                        pub r#resource_logs: crate::area::AreaVec<
                             super::super::super::logs_::v1_::ResourceLogs,
                         >,
                     }
@@ -3647,7 +3658,7 @@ pub mod opentelemetry_ {
                         ///
                         /// error_message is an optional field. An error_message with an empty value
                         /// is equivalent to it not being set.
-                        pub r#error_message: ::std::string::String,
+                        pub r#error_message: crate::area::AreaString,
                     }
                     impl ExportLogsPartialSuccess {
                         /// Return a reference to `rejected_log_records`
@@ -3677,21 +3688,21 @@ pub mod opentelemetry_ {
                         }
                         /// Return a reference to `error_message`
                         #[inline]
-                        pub fn r#error_message(&self) -> &::std::string::String {
+                        pub fn r#error_message(&self) -> &crate::area::AreaString {
                             &self.r#error_message
                         }
                         /// Return a mutable reference to `error_message`
                         #[inline]
                         pub fn mut_error_message(
                             &mut self,
-                        ) -> &mut ::std::string::String {
+                        ) -> &mut crate::area::AreaString {
                             &mut self.r#error_message
                         }
                         /// Set the value of `error_message`
                         #[inline]
                         pub fn set_error_message(
                             &mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> &mut Self {
                             self.r#error_message = value.into();
                             self
@@ -3700,7 +3711,7 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_error_message(
                             mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> Self {
                             self.r#error_message = value.into();
                             self
@@ -3828,7 +3839,7 @@ pub mod opentelemetry_ {
                         /// element. Intermediary nodes (such as OpenTelemetry Collector) that receive
                         /// data from multiple origins typically batch the data before forwarding further and
                         /// in that case this array will contain multiple elements.
-                        pub r#resource_metrics: ::std::vec::Vec<
+                        pub r#resource_metrics: crate::area::AreaVec<
                             super::super::super::metrics_::v1_::ResourceMetrics,
                         >,
                     }
@@ -4147,7 +4158,7 @@ pub mod opentelemetry_ {
                         ///
                         /// error_message is an optional field. An error_message with an empty value
                         /// is equivalent to it not being set.
-                        pub r#error_message: ::std::string::String,
+                        pub r#error_message: crate::area::AreaString,
                     }
                     impl ExportMetricsPartialSuccess {
                         /// Return a reference to `rejected_data_points`
@@ -4177,21 +4188,21 @@ pub mod opentelemetry_ {
                         }
                         /// Return a reference to `error_message`
                         #[inline]
-                        pub fn r#error_message(&self) -> &::std::string::String {
+                        pub fn r#error_message(&self) -> &crate::area::AreaString {
                             &self.r#error_message
                         }
                         /// Return a mutable reference to `error_message`
                         #[inline]
                         pub fn mut_error_message(
                             &mut self,
-                        ) -> &mut ::std::string::String {
+                        ) -> &mut crate::area::AreaString {
                             &mut self.r#error_message
                         }
                         /// Set the value of `error_message`
                         #[inline]
                         pub fn set_error_message(
                             &mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> &mut Self {
                             self.r#error_message = value.into();
                             self
@@ -4200,7 +4211,7 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_error_message(
                             mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> Self {
                             self.r#error_message = value.into();
                             self
@@ -4328,7 +4339,7 @@ pub mod opentelemetry_ {
                         /// element. Intermediary nodes (such as OpenTelemetry Collector) that receive
                         /// data from multiple origins typically batch the data before forwarding further and
                         /// in that case this array will contain multiple elements.
-                        pub r#resource_spans: ::std::vec::Vec<
+                        pub r#resource_spans: crate::area::AreaVec<
                             super::super::super::trace_::v1_::ResourceSpans,
                         >,
                     }
@@ -4641,7 +4652,7 @@ pub mod opentelemetry_ {
                         ///
                         /// error_message is an optional field. An error_message with an empty value
                         /// is equivalent to it not being set.
-                        pub r#error_message: ::std::string::String,
+                        pub r#error_message: crate::area::AreaString,
                     }
                     impl ExportTracePartialSuccess {
                         /// Return a reference to `rejected_spans`
@@ -4668,21 +4679,21 @@ pub mod opentelemetry_ {
                         }
                         /// Return a reference to `error_message`
                         #[inline]
-                        pub fn r#error_message(&self) -> &::std::string::String {
+                        pub fn r#error_message(&self) -> &crate::area::AreaString {
                             &self.r#error_message
                         }
                         /// Return a mutable reference to `error_message`
                         #[inline]
                         pub fn mut_error_message(
                             &mut self,
-                        ) -> &mut ::std::string::String {
+                        ) -> &mut crate::area::AreaString {
                             &mut self.r#error_message
                         }
                         /// Set the value of `error_message`
                         #[inline]
                         pub fn set_error_message(
                             &mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> &mut Self {
                             self.r#error_message = value.into();
                             self
@@ -4691,7 +4702,7 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_error_message(
                             mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> Self {
                             self.r#error_message = value.into();
                             self
@@ -4848,7 +4859,7 @@ pub mod opentelemetry_ {
                     /// one element. Intermediary nodes that receive data from multiple origins
                     /// typically batch the data before forwarding further and in that case this
                     /// array will contain multiple elements.
-                    pub r#resource_metrics: ::std::vec::Vec<ResourceMetrics>,
+                    pub r#resource_metrics: crate::area::AreaVec<ResourceMetrics>,
                 }
                 impl MetricsData {}
                 impl ::micropb::MessageDecode for MetricsData {
@@ -4947,14 +4958,14 @@ pub mod opentelemetry_ {
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
                     pub r#resource: super::super::resource_::v1_::Resource,
                     /// A list of metrics that originate from a resource.
-                    pub r#scope_metrics: ::std::vec::Vec<ScopeMetrics>,
+                    pub r#scope_metrics: crate::area::AreaVec<ScopeMetrics>,
                     /// The Schema URL, if known. This is the identifier of the Schema that the resource data
                     /// is recorded in. Notably, the last part of the URL path is the version number of the
                     /// schema: http[s]://server[:port]/path/<version>. To learn more about Schema URL see
                     /// https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
                     /// This schema_url applies to the data in the "resource" field. It does not apply
                     /// to the data in the "scope_metrics" field which have their own schema_url field.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: ResourceMetrics_::_Hazzer,
                 }
@@ -5025,19 +5036,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -5046,7 +5057,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
@@ -5253,14 +5264,14 @@ pub mod opentelemetry_ {
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
                     pub r#scope: super::super::common_::v1_::InstrumentationScope,
                     /// A list of metrics that originate from an instrumentation library.
-                    pub r#metrics: ::std::vec::Vec<Metric>,
+                    pub r#metrics: crate::area::AreaVec<Metric>,
                     /// The Schema URL, if known. This is the identifier of the Schema that the metric data
                     /// is recorded in. Notably, the last part of the URL path is the version number of the
                     /// schema: http[s]://server[:port]/path/<version>. To learn more about Schema URL see
                     /// https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
                     /// This schema_url applies to the data in the "scope" field and all metrics in the
                     /// "metrics" field.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: ScopeMetrics_::_Hazzer,
                 }
@@ -5333,19 +5344,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -5354,7 +5365,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
@@ -5636,12 +5647,12 @@ pub mod opentelemetry_ {
                 #[derive(Debug, Default, PartialEq)]
                 pub struct Metric {
                     /// The name of the metric.
-                    pub r#name: ::std::string::String,
+                    pub r#name: crate::area::AreaString,
                     /// A description of the metric, which can be used in documentation.
-                    pub r#description: ::std::string::String,
+                    pub r#description: crate::area::AreaString,
                     /// The unit in which the metric value is reported. Follows the format
                     /// described by https://unitsofmeasure.org/ucum.html.
-                    pub r#unit: ::std::string::String,
+                    pub r#unit: crate::area::AreaString,
                     /// Additional metadata attributes that describe the metric. [Optional].
                     /// Attributes are non-identifying.
                     /// Consumers SHOULD NOT need to be aware of these attributes.
@@ -5650,7 +5661,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#metadata: ::std::vec::Vec<
+                    pub r#metadata: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// Data determines the aggregation type (if any) of the metric, what is the
@@ -5661,44 +5672,44 @@ pub mod opentelemetry_ {
                 impl Metric {
                     /// Return a reference to `name`
                     #[inline]
-                    pub fn r#name(&self) -> &::std::string::String {
+                    pub fn r#name(&self) -> &crate::area::AreaString {
                         &self.r#name
                     }
                     /// Return a mutable reference to `name`
                     #[inline]
-                    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_name(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#name
                     }
                     /// Set the value of `name`
                     #[inline]
                     pub fn set_name(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#name = value.into();
                         self
                     }
                     /// Builder method that sets the value of `name`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_name(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_name(mut self, value: crate::area::AreaString) -> Self {
                         self.r#name = value.into();
                         self
                     }
                     /// Return a reference to `description`
                     #[inline]
-                    pub fn r#description(&self) -> &::std::string::String {
+                    pub fn r#description(&self) -> &crate::area::AreaString {
                         &self.r#description
                     }
                     /// Return a mutable reference to `description`
                     #[inline]
-                    pub fn mut_description(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_description(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#description
                     }
                     /// Set the value of `description`
                     #[inline]
                     pub fn set_description(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#description = value.into();
                         self
@@ -5707,33 +5718,33 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_description(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#description = value.into();
                         self
                     }
                     /// Return a reference to `unit`
                     #[inline]
-                    pub fn r#unit(&self) -> &::std::string::String {
+                    pub fn r#unit(&self) -> &crate::area::AreaString {
                         &self.r#unit
                     }
                     /// Return a mutable reference to `unit`
                     #[inline]
-                    pub fn mut_unit(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_unit(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#unit
                     }
                     /// Set the value of `unit`
                     #[inline]
                     pub fn set_unit(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#unit = value.into();
                         self
                     }
                     /// Builder method that sets the value of `unit`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_unit(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_unit(mut self, value: crate::area::AreaString) -> Self {
                         self.r#unit = value.into();
                         self
                     }
@@ -6184,7 +6195,7 @@ pub mod opentelemetry_ {
                 pub struct Gauge {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
-                    pub r#data_points: ::std::vec::Vec<NumberDataPoint>,
+                    pub r#data_points: crate::area::AreaVec<NumberDataPoint>,
                 }
                 impl Gauge {}
                 impl ::micropb::MessageDecode for Gauge {
@@ -6272,7 +6283,7 @@ pub mod opentelemetry_ {
                 pub struct Sum {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
-                    pub r#data_points: ::std::vec::Vec<NumberDataPoint>,
+                    pub r#data_points: crate::area::AreaVec<NumberDataPoint>,
                     /// aggregation_temporality describes if the aggregator reports delta changes
                     /// since last report time, or cumulative changes since a fixed start time.
                     pub r#aggregation_temporality: AggregationTemporality,
@@ -6488,7 +6499,7 @@ pub mod opentelemetry_ {
                 pub struct Histogram {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
-                    pub r#data_points: ::std::vec::Vec<HistogramDataPoint>,
+                    pub r#data_points: crate::area::AreaVec<HistogramDataPoint>,
                     /// aggregation_temporality describes if the aggregator reports delta changes
                     /// since last report time, or cumulative changes since a fixed start time.
                     pub r#aggregation_temporality: AggregationTemporality,
@@ -6647,7 +6658,9 @@ pub mod opentelemetry_ {
                 pub struct ExponentialHistogram {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
-                    pub r#data_points: ::std::vec::Vec<ExponentialHistogramDataPoint>,
+                    pub r#data_points: crate::area::AreaVec<
+                        ExponentialHistogramDataPoint,
+                    >,
                     /// aggregation_temporality describes if the aggregator reports delta changes
                     /// since last report time, or cumulative changes since a fixed start time.
                     pub r#aggregation_temporality: AggregationTemporality,
@@ -6813,7 +6826,7 @@ pub mod opentelemetry_ {
                 pub struct Summary {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
-                    pub r#data_points: ::std::vec::Vec<SummaryDataPoint>,
+                    pub r#data_points: crate::area::AreaVec<SummaryDataPoint>,
                 }
                 impl Summary {}
                 impl ::micropb::MessageDecode for Summary {
@@ -6904,7 +6917,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// StartTimeUnixNano is optional but strongly encouraged, see the
@@ -6920,7 +6933,7 @@ pub mod opentelemetry_ {
                     pub r#time_unix_nano: u64,
                     /// (Optional) List of exemplars collected from
                     /// measurements that were used to form the data point
-                    pub r#exemplars: ::std::vec::Vec<Exemplar>,
+                    pub r#exemplars: crate::area::AreaVec<Exemplar>,
                     /// Flags that apply to this specific data point.  See DataPointFlags
                     /// for the available flags and their meaning.
                     pub r#flags: u32,
@@ -7340,7 +7353,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// StartTimeUnixNano is optional but strongly encouraged, see the
@@ -7378,7 +7391,7 @@ pub mod opentelemetry_ {
                     /// the number of elements in explicit_bounds array. The exception to this rule
                     /// is when the length of bucket_counts is 0, then the length of explicit_bounds
                     /// must also be 0.
-                    pub r#bucket_counts: ::std::vec::Vec<u64>,
+                    pub r#bucket_counts: crate::area::AreaVec<u64>,
                     /// explicit_bounds specifies buckets with explicitly defined bounds for values.
                     ///
                     /// The boundaries for bucket at index i are:
@@ -7395,10 +7408,10 @@ pub mod opentelemetry_ {
                     ///
                     /// If bucket_counts length is 0 then explicit_bounds length must also be 0,
                     /// otherwise the data point is invalid.
-                    pub r#explicit_bounds: ::std::vec::Vec<f64>,
+                    pub r#explicit_bounds: crate::area::AreaVec<f64>,
                     /// (Optional) List of exemplars collected from
                     /// measurements that were used to form the data point
-                    pub r#exemplars: ::std::vec::Vec<Exemplar>,
+                    pub r#exemplars: crate::area::AreaVec<Exemplar>,
                     /// Flags that apply to this specific data point.  See DataPointFlags
                     /// for the available flags and their meaning.
                     pub r#flags: u32,
@@ -8160,7 +8173,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// StartTimeUnixNano is optional but strongly encouraged, see the
@@ -8227,7 +8240,7 @@ pub mod opentelemetry_ {
                     pub r#flags: u32,
                     /// (Optional) List of exemplars collected from
                     /// measurements that were used to form the data point
-                    pub r#exemplars: ::std::vec::Vec<Exemplar>,
+                    pub r#exemplars: crate::area::AreaVec<Exemplar>,
                     /// The minimum value over (start_time, end_time].
                     ///
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
@@ -9194,7 +9207,7 @@ pub mod opentelemetry_ {
                         /// fixed64.  This field is expected to have many buckets,
                         /// especially zeros, so uint64 has been selected to ensure
                         /// varint encoding.
-                        pub r#bucket_counts: ::std::vec::Vec<u64>,
+                        pub r#bucket_counts: crate::area::AreaVec<u64>,
                     }
                     impl Buckets {
                         /// Return a reference to `offset`
@@ -9488,7 +9501,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// StartTimeUnixNano is optional but strongly encouraged, see the
@@ -9515,7 +9528,7 @@ pub mod opentelemetry_ {
                     pub r#sum: f64,
                     /// (Optional) list of values at different quantiles of the distribution calculated
                     /// from the current snapshot. The quantiles must be strictly increasing.
-                    pub r#quantile_values: ::std::vec::Vec<
+                    pub r#quantile_values: crate::area::AreaVec<
                         SummaryDataPoint_::ValueAtQuantile,
                     >,
                     /// Flags that apply to this specific data point.  See DataPointFlags
@@ -10107,7 +10120,7 @@ pub mod opentelemetry_ {
                     /// The set of key/value pairs that were filtered out by the aggregator, but
                     /// recorded alongside the original measurement. Only key/value pairs that were
                     /// filtered out by the aggregator should be included
-                    pub r#filtered_attributes: ::std::vec::Vec<
+                    pub r#filtered_attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// time_unix_nano is the exact time when this exemplar was recorded
@@ -10118,11 +10131,11 @@ pub mod opentelemetry_ {
                     /// (Optional) Span ID of the exemplar trace.
                     /// span_id may be missing if the measurement is not recorded inside a trace
                     /// or if the trace is not sampled.
-                    pub r#span_id: ::std::vec::Vec<u8>,
+                    pub r#span_id: crate::area::AreaBytes,
                     /// (Optional) Trace ID of the exemplar trace.
                     /// trace_id may be missing if the measurement is not recorded inside a trace
                     /// or if the trace is not sampled.
-                    pub r#trace_id: ::std::vec::Vec<u8>,
+                    pub r#trace_id: crate::area::AreaBytes,
                     /// The value of the measurement that was recorded. An exemplar is
                     /// considered invalid when one of the recognized value fields is not present
                     /// inside this oneof.
@@ -10153,51 +10166,57 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `span_id`
                     #[inline]
-                    pub fn r#span_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#span_id(&self) -> &crate::area::AreaBytes {
                         &self.r#span_id
                     }
                     /// Return a mutable reference to `span_id`
                     #[inline]
-                    pub fn mut_span_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_span_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#span_id
                     }
                     /// Set the value of `span_id`
                     #[inline]
                     pub fn set_span_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#span_id = value.into();
                         self
                     }
                     /// Builder method that sets the value of `span_id`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_span_id(mut self, value: ::std::vec::Vec<u8>) -> Self {
+                    pub fn init_span_id(
+                        mut self,
+                        value: crate::area::AreaBytes,
+                    ) -> Self {
                         self.r#span_id = value.into();
                         self
                     }
                     /// Return a reference to `trace_id`
                     #[inline]
-                    pub fn r#trace_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#trace_id(&self) -> &crate::area::AreaBytes {
                         &self.r#trace_id
                     }
                     /// Return a mutable reference to `trace_id`
                     #[inline]
-                    pub fn mut_trace_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_trace_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#trace_id
                     }
                     /// Set the value of `trace_id`
                     #[inline]
                     pub fn set_trace_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#trace_id = value.into();
                         self
                     }
                     /// Builder method that sets the value of `trace_id`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_trace_id(mut self, value: ::std::vec::Vec<u8>) -> Self {
+                    pub fn init_trace_id(
+                        mut self,
+                        value: crate::area::AreaBytes,
+                    ) -> Self {
                         self.r#trace_id = value.into();
                         self
                     }
@@ -10631,7 +10650,7 @@ pub mod opentelemetry_ {
                     /// one element. Intermediary nodes that receive data from multiple origins
                     /// typically batch the data before forwarding further and in that case this
                     /// array will contain multiple elements.
-                    pub r#resource_spans: ::std::vec::Vec<ResourceSpans>,
+                    pub r#resource_spans: crate::area::AreaVec<ResourceSpans>,
                 }
                 impl TracesData {}
                 impl ::micropb::MessageDecode for TracesData {
@@ -10724,14 +10743,14 @@ pub mod opentelemetry_ {
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
                     pub r#resource: super::super::resource_::v1_::Resource,
                     /// A list of ScopeSpans that originate from a resource.
-                    pub r#scope_spans: ::std::vec::Vec<ScopeSpans>,
+                    pub r#scope_spans: crate::area::AreaVec<ScopeSpans>,
                     /// The Schema URL, if known. This is the identifier of the Schema that the resource data
                     /// is recorded in. Notably, the last part of the URL path is the version number of the
                     /// schema: http[s]://server[:port]/path/<version>. To learn more about Schema URL see
                     /// https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
                     /// This schema_url applies to the data in the "resource" field. It does not apply
                     /// to the data in the "scope_spans" field which have their own schema_url field.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: ResourceSpans_::_Hazzer,
                 }
@@ -10802,19 +10821,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -10823,7 +10842,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
@@ -11030,14 +11049,14 @@ pub mod opentelemetry_ {
                     /// *Note:* The presence of this field is tracked separately in the `_has` field. It's recommended to access this field via the accessor rather than directly.
                     pub r#scope: super::super::common_::v1_::InstrumentationScope,
                     /// A list of Spans that originate from an instrumentation scope.
-                    pub r#spans: ::std::vec::Vec<Span>,
+                    pub r#spans: crate::area::AreaVec<Span>,
                     /// The Schema URL, if known. This is the identifier of the Schema that the span data
                     /// is recorded in. Notably, the last part of the URL path is the version number of the
                     /// schema: http[s]://server[:port]/path/<version>. To learn more about Schema URL see
                     /// https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
                     /// This schema_url applies to the data in the "scope" field and all spans and span
                     /// events in the "spans" field.
-                    pub r#schema_url: ::std::string::String,
+                    pub r#schema_url: crate::area::AreaString,
                     /// Tracks presence of optional and message fields
                     pub _has: ScopeSpans_::_Hazzer,
                 }
@@ -11110,19 +11129,19 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `schema_url`
                     #[inline]
-                    pub fn r#schema_url(&self) -> &::std::string::String {
+                    pub fn r#schema_url(&self) -> &crate::area::AreaString {
                         &self.r#schema_url
                     }
                     /// Return a mutable reference to `schema_url`
                     #[inline]
-                    pub fn mut_schema_url(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_schema_url(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#schema_url
                     }
                     /// Set the value of `schema_url`
                     #[inline]
                     pub fn set_schema_url(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#schema_url = value.into();
                         self
@@ -11131,7 +11150,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_schema_url(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#schema_url = value.into();
                         self
@@ -11337,21 +11356,21 @@ pub mod opentelemetry_ {
                     /// is zero-length and thus is also invalid).
                     ///
                     /// This field is required.
-                    pub r#trace_id: ::std::vec::Vec<u8>,
+                    pub r#trace_id: crate::area::AreaBytes,
                     /// A unique identifier for a span within a trace, assigned when the span
                     /// is created. The ID is an 8-byte array. An ID with all zeroes OR of length
                     /// other than 8 bytes is considered invalid (empty string in OTLP/JSON
                     /// is zero-length and thus is also invalid).
                     ///
                     /// This field is required.
-                    pub r#span_id: ::std::vec::Vec<u8>,
+                    pub r#span_id: crate::area::AreaBytes,
                     /// trace_state conveys information about request position in multiple distributed tracing graphs.
                     /// It is a trace_state in w3c-trace-context format: https://www.w3.org/TR/trace-context/#tracestate-header
                     /// See also https://github.com/w3c/distributed-tracing for more details about this field.
-                    pub r#trace_state: ::std::string::String,
+                    pub r#trace_state: crate::area::AreaString,
                     /// The `span_id` of this span's parent span. If this is a root span, then this
                     /// field must be empty. The ID is an 8-byte array.
-                    pub r#parent_span_id: ::std::vec::Vec<u8>,
+                    pub r#parent_span_id: crate::area::AreaBytes,
                     /// Flags, a bit field.
                     ///
                     /// Bits 0-7 (8 least significant bits) are the trace flags as defined in W3C Trace
@@ -11385,7 +11404,7 @@ pub mod opentelemetry_ {
                     /// Empty value is equivalent to an unknown span name.
                     ///
                     /// This field is required.
-                    pub r#name: ::std::string::String,
+                    pub r#name: crate::area::AreaString,
                     /// Distinguishes between spans generated in a particular context. For example,
                     /// two spans with the same name may be distinguished using `CLIENT` (caller)
                     /// and `SERVER` (callee) to identify queueing latency associated with the span.
@@ -11415,7 +11434,7 @@ pub mod opentelemetry_ {
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
                     /// attribute with the same key).
                     /// The behavior of software that receives duplicated keys can be unpredictable.
-                    pub r#attributes: ::std::vec::Vec<
+                    pub r#attributes: crate::area::AreaVec<
                         super::super::common_::v1_::KeyValue,
                     >,
                     /// The number of attributes that were discarded. Attributes
@@ -11423,13 +11442,13 @@ pub mod opentelemetry_ {
                     /// attributes. If this value is 0, then no attributes were dropped.
                     pub r#dropped_attributes_count: u32,
                     /// A collection of Event items.
-                    pub r#events: ::std::vec::Vec<Span_::Event>,
+                    pub r#events: crate::area::AreaVec<Span_::Event>,
                     /// The number of dropped events. If the value is 0, then no
                     /// events were dropped.
                     pub r#dropped_events_count: u32,
                     /// A collection of Links, which are references from this span to a span
                     /// in the same or different trace.
-                    pub r#links: ::std::vec::Vec<Span_::Link>,
+                    pub r#links: crate::area::AreaVec<Span_::Link>,
                     /// The number of dropped links after the maximum size was
                     /// enforced. If this value is 0, then no links were dropped.
                     pub r#dropped_links_count: u32,
@@ -11474,69 +11493,75 @@ pub mod opentelemetry_ {
                 impl Span {
                     /// Return a reference to `trace_id`
                     #[inline]
-                    pub fn r#trace_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#trace_id(&self) -> &crate::area::AreaBytes {
                         &self.r#trace_id
                     }
                     /// Return a mutable reference to `trace_id`
                     #[inline]
-                    pub fn mut_trace_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_trace_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#trace_id
                     }
                     /// Set the value of `trace_id`
                     #[inline]
                     pub fn set_trace_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#trace_id = value.into();
                         self
                     }
                     /// Builder method that sets the value of `trace_id`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_trace_id(mut self, value: ::std::vec::Vec<u8>) -> Self {
+                    pub fn init_trace_id(
+                        mut self,
+                        value: crate::area::AreaBytes,
+                    ) -> Self {
                         self.r#trace_id = value.into();
                         self
                     }
                     /// Return a reference to `span_id`
                     #[inline]
-                    pub fn r#span_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#span_id(&self) -> &crate::area::AreaBytes {
                         &self.r#span_id
                     }
                     /// Return a mutable reference to `span_id`
                     #[inline]
-                    pub fn mut_span_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_span_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#span_id
                     }
                     /// Set the value of `span_id`
                     #[inline]
                     pub fn set_span_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#span_id = value.into();
                         self
                     }
                     /// Builder method that sets the value of `span_id`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_span_id(mut self, value: ::std::vec::Vec<u8>) -> Self {
+                    pub fn init_span_id(
+                        mut self,
+                        value: crate::area::AreaBytes,
+                    ) -> Self {
                         self.r#span_id = value.into();
                         self
                     }
                     /// Return a reference to `trace_state`
                     #[inline]
-                    pub fn r#trace_state(&self) -> &::std::string::String {
+                    pub fn r#trace_state(&self) -> &crate::area::AreaString {
                         &self.r#trace_state
                     }
                     /// Return a mutable reference to `trace_state`
                     #[inline]
-                    pub fn mut_trace_state(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_trace_state(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#trace_state
                     }
                     /// Set the value of `trace_state`
                     #[inline]
                     pub fn set_trace_state(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#trace_state = value.into();
                         self
@@ -11545,26 +11570,26 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_trace_state(
                         mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> Self {
                         self.r#trace_state = value.into();
                         self
                     }
                     /// Return a reference to `parent_span_id`
                     #[inline]
-                    pub fn r#parent_span_id(&self) -> &::std::vec::Vec<u8> {
+                    pub fn r#parent_span_id(&self) -> &crate::area::AreaBytes {
                         &self.r#parent_span_id
                     }
                     /// Return a mutable reference to `parent_span_id`
                     #[inline]
-                    pub fn mut_parent_span_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                    pub fn mut_parent_span_id(&mut self) -> &mut crate::area::AreaBytes {
                         &mut self.r#parent_span_id
                     }
                     /// Set the value of `parent_span_id`
                     #[inline]
                     pub fn set_parent_span_id(
                         &mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> &mut Self {
                         self.r#parent_span_id = value.into();
                         self
@@ -11573,7 +11598,7 @@ pub mod opentelemetry_ {
                     #[inline]
                     pub fn init_parent_span_id(
                         mut self,
-                        value: ::std::vec::Vec<u8>,
+                        value: crate::area::AreaBytes,
                     ) -> Self {
                         self.r#parent_span_id = value.into();
                         self
@@ -11602,26 +11627,26 @@ pub mod opentelemetry_ {
                     }
                     /// Return a reference to `name`
                     #[inline]
-                    pub fn r#name(&self) -> &::std::string::String {
+                    pub fn r#name(&self) -> &crate::area::AreaString {
                         &self.r#name
                     }
                     /// Return a mutable reference to `name`
                     #[inline]
-                    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_name(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#name
                     }
                     /// Set the value of `name`
                     #[inline]
                     pub fn set_name(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#name = value.into();
                         self
                     }
                     /// Builder method that sets the value of `name`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_name(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_name(mut self, value: crate::area::AreaString) -> Self {
                         self.r#name = value.into();
                         self
                     }
@@ -12418,12 +12443,12 @@ pub mod opentelemetry_ {
                         pub r#time_unix_nano: u64,
                         /// The name of the event.
                         /// This field is semantically required to be set to non-empty string.
-                        pub r#name: ::std::string::String,
+                        pub r#name: crate::area::AreaString,
                         /// A collection of attribute key/value pairs on the event.
                         /// Attribute keys MUST be unique (it is not allowed to have more than one
                         /// attribute with the same key).
                         /// The behavior of software that receives duplicated keys can be unpredictable.
-                        pub r#attributes: ::std::vec::Vec<
+                        pub r#attributes: crate::area::AreaVec<
                             super::super::super::common_::v1_::KeyValue,
                         >,
                         /// The number of dropped attributes. If the value is 0,
@@ -12455,19 +12480,19 @@ pub mod opentelemetry_ {
                         }
                         /// Return a reference to `name`
                         #[inline]
-                        pub fn r#name(&self) -> &::std::string::String {
+                        pub fn r#name(&self) -> &crate::area::AreaString {
                             &self.r#name
                         }
                         /// Return a mutable reference to `name`
                         #[inline]
-                        pub fn mut_name(&mut self) -> &mut ::std::string::String {
+                        pub fn mut_name(&mut self) -> &mut crate::area::AreaString {
                             &mut self.r#name
                         }
                         /// Set the value of `name`
                         #[inline]
                         pub fn set_name(
                             &mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> &mut Self {
                             self.r#name = value.into();
                             self
@@ -12476,7 +12501,7 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_name(
                             mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> Self {
                             self.r#name = value.into();
                             self
@@ -12703,16 +12728,16 @@ pub mod opentelemetry_ {
                     pub struct Link {
                         /// A unique identifier of a trace that this linked span is part of. The ID is a
                         /// 16-byte array.
-                        pub r#trace_id: ::std::vec::Vec<u8>,
+                        pub r#trace_id: crate::area::AreaBytes,
                         /// A unique identifier for the linked span. The ID is an 8-byte array.
-                        pub r#span_id: ::std::vec::Vec<u8>,
+                        pub r#span_id: crate::area::AreaBytes,
                         /// The trace_state associated with the link.
-                        pub r#trace_state: ::std::string::String,
+                        pub r#trace_state: crate::area::AreaString,
                         /// A collection of attribute key/value pairs on the link.
                         /// Attribute keys MUST be unique (it is not allowed to have more than one
                         /// attribute with the same key).
                         /// The behavior of software that receives duplicated keys can be unpredictable.
-                        pub r#attributes: ::std::vec::Vec<
+                        pub r#attributes: crate::area::AreaVec<
                             super::super::super::common_::v1_::KeyValue,
                         >,
                         /// The number of dropped attributes. If the value is 0,
@@ -12740,19 +12765,19 @@ pub mod opentelemetry_ {
                     impl Link {
                         /// Return a reference to `trace_id`
                         #[inline]
-                        pub fn r#trace_id(&self) -> &::std::vec::Vec<u8> {
+                        pub fn r#trace_id(&self) -> &crate::area::AreaBytes {
                             &self.r#trace_id
                         }
                         /// Return a mutable reference to `trace_id`
                         #[inline]
-                        pub fn mut_trace_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                        pub fn mut_trace_id(&mut self) -> &mut crate::area::AreaBytes {
                             &mut self.r#trace_id
                         }
                         /// Set the value of `trace_id`
                         #[inline]
                         pub fn set_trace_id(
                             &mut self,
-                            value: ::std::vec::Vec<u8>,
+                            value: crate::area::AreaBytes,
                         ) -> &mut Self {
                             self.r#trace_id = value.into();
                             self
@@ -12761,26 +12786,26 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_trace_id(
                             mut self,
-                            value: ::std::vec::Vec<u8>,
+                            value: crate::area::AreaBytes,
                         ) -> Self {
                             self.r#trace_id = value.into();
                             self
                         }
                         /// Return a reference to `span_id`
                         #[inline]
-                        pub fn r#span_id(&self) -> &::std::vec::Vec<u8> {
+                        pub fn r#span_id(&self) -> &crate::area::AreaBytes {
                             &self.r#span_id
                         }
                         /// Return a mutable reference to `span_id`
                         #[inline]
-                        pub fn mut_span_id(&mut self) -> &mut ::std::vec::Vec<u8> {
+                        pub fn mut_span_id(&mut self) -> &mut crate::area::AreaBytes {
                             &mut self.r#span_id
                         }
                         /// Set the value of `span_id`
                         #[inline]
                         pub fn set_span_id(
                             &mut self,
-                            value: ::std::vec::Vec<u8>,
+                            value: crate::area::AreaBytes,
                         ) -> &mut Self {
                             self.r#span_id = value.into();
                             self
@@ -12789,26 +12814,28 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_span_id(
                             mut self,
-                            value: ::std::vec::Vec<u8>,
+                            value: crate::area::AreaBytes,
                         ) -> Self {
                             self.r#span_id = value.into();
                             self
                         }
                         /// Return a reference to `trace_state`
                         #[inline]
-                        pub fn r#trace_state(&self) -> &::std::string::String {
+                        pub fn r#trace_state(&self) -> &crate::area::AreaString {
                             &self.r#trace_state
                         }
                         /// Return a mutable reference to `trace_state`
                         #[inline]
-                        pub fn mut_trace_state(&mut self) -> &mut ::std::string::String {
+                        pub fn mut_trace_state(
+                            &mut self,
+                        ) -> &mut crate::area::AreaString {
                             &mut self.r#trace_state
                         }
                         /// Set the value of `trace_state`
                         #[inline]
                         pub fn set_trace_state(
                             &mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> &mut Self {
                             self.r#trace_state = value.into();
                             self
@@ -12817,7 +12844,7 @@ pub mod opentelemetry_ {
                         #[inline]
                         pub fn init_trace_state(
                             mut self,
-                            value: ::std::string::String,
+                            value: crate::area::AreaString,
                         ) -> Self {
                             self.r#trace_state = value.into();
                             self
@@ -13206,33 +13233,36 @@ pub mod opentelemetry_ {
                 #[derive(Debug, Default, PartialEq)]
                 pub struct Status {
                     /// A developer-facing human readable error message.
-                    pub r#message: ::std::string::String,
+                    pub r#message: crate::area::AreaString,
                     /// The status code.
                     pub r#code: Status_::StatusCode,
                 }
                 impl Status {
                     /// Return a reference to `message`
                     #[inline]
-                    pub fn r#message(&self) -> &::std::string::String {
+                    pub fn r#message(&self) -> &crate::area::AreaString {
                         &self.r#message
                     }
                     /// Return a mutable reference to `message`
                     #[inline]
-                    pub fn mut_message(&mut self) -> &mut ::std::string::String {
+                    pub fn mut_message(&mut self) -> &mut crate::area::AreaString {
                         &mut self.r#message
                     }
                     /// Set the value of `message`
                     #[inline]
                     pub fn set_message(
                         &mut self,
-                        value: ::std::string::String,
+                        value: crate::area::AreaString,
                     ) -> &mut Self {
                         self.r#message = value.into();
                         self
                     }
                     /// Builder method that sets the value of `message`. Useful for initializing the message.
                     #[inline]
-                    pub fn init_message(mut self, value: ::std::string::String) -> Self {
+                    pub fn init_message(
+                        mut self,
+                        value: crate::area::AreaString,
+                    ) -> Self {
                         self.r#message = value.into();
                         self
                     }

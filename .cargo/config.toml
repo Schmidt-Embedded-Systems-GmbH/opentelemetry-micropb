@@ -1,0 +1,4 @@
+[alias]
+test-all-backends = "test --features use_area,use_bumpalo"
+bench-all-backends = "bench --features use_area,use_bumpalo --bench backends"
+bench-all-backends-spinlock = "bench --features use_area,use_bumpalo,use_spinlock --bench backends"

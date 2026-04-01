@@ -8,15 +8,28 @@ license = "MIT"
 [features]
 # uncomment during development
 # default = ["use_std", "use_bumpalo", "codegen"]
-default = ["use_std", "use_bumpalo"]
+default = ["use_std"]
 use_std = ["micropb"]
-use_bumpalo = ["bumpalo"]
+use_bumpalo = ["micropb", "bumpalo"]
+use_area = ["micropb"]
+use_spinlock = ["dep:spin"]
+h2-client = ["use_std", "dep:bytes", "dep:h2", "dep:http", "dep:tokio"]
+h2-server = ["use_std", "dep:bytes", "dep:h2", "dep:http", "dep:tokio"]
 
 codegen = ["micropb-gen"]
 
 [dependencies]
-micropb = { version = "0.1.0", features = ["std"], optional = true }
-micropb-gen = { version = "0.1.0", optional = true }
-# micropb = { path = "../../micropb/micropb", features = ["std"], optional = true }
-# micropb-gen = { path = "../../micropb/micropb-gen", default-features = false, optional = true }
+micropb = { version = "0.6.0", path = "./micropb/micropb", features = ["std"], optional = true }
+micropb-gen = { version = "0.6.0", path = "./micropb/micropb-gen", optional = true }
 bumpalo = { version = "3.9", features = ["collections"], optional = true }
+spin = { version = "0.10", optional = true }
+bytes = { version = "1", optional = true }
+h2 = { version = "0.4", optional = true }
+http = { version = "1", optional = true }
+tokio = { version = "1", features = ["net", "rt", "time"], optional = true }
+
+[dev-dependencies]
+opentelemetry-proto = { version = "0.31.0", features = ["gen-tonic-messages", "trace", "logs", "metrics"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "time"] }
+tokio-stream = { version = "0.1", features = ["net"] }
+tonic = { version = "0.14.4", features = ["transport"] }
