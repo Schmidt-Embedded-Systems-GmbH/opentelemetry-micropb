@@ -3,6 +3,7 @@ name = "opentelemetry-micropb"
 version = "0.2.0"
 edition = "2021"
 license = "MIT"
+description = "An micropb-powered crate for working with OpenTelemetry Protobuf types and OTLP-gRPC" 
 
 [features]
 # uncomment during development
