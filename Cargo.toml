@@ -5,6 +5,9 @@ edition = "2021"
 license = "MIT"
 description = "An micropb-powered crate for working with OpenTelemetry Protobuf types and OTLP-gRPC" 
 
+[lib]
+doctest = false
+
 [features]
 # uncomment during development
 # default = ["use_std", "use_bumpalo", "codegen"]
