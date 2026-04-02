@@ -17,7 +17,8 @@ fn main() {
     std_gen
         .add_protoc_arg("-I./opentelemetry-proto")
         .add_protoc_arg("--experimental_allow_proto3_optional")
-        .configure(".", no_clone.clone())
+        // Note: We implement Clone for StdBackend!
+        // .configure(".", no_clone.clone())
         .use_container_std();
     std_gen
         .compile_protos(&protos, manifest_dir.clone() + "/src/generated_std.rs")

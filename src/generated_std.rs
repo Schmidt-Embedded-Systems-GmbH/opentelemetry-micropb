@@ -5,7 +5,7 @@ pub mod opentelemetry_ {
                 /// Represents any type of attribute value. AnyValue may contain a
                 /// primitive value such as a string or integer or it may contain an arbitrary nested
                 /// object containing arrays, key-value lists and primitives.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct AnyValue {
                     /// The value is one of the listed fields. It is valid for all values to be unspecified
                     /// in which case this AnyValue is considered to be "empty".
@@ -407,7 +407,7 @@ pub mod opentelemetry_ {
                 pub mod AnyValue_ {
                     /// The value is one of the listed fields. It is valid for all values to be unspecified
                     /// in which case this AnyValue is considered to be "empty".
-                    #[derive(Debug, PartialEq)]
+                    #[derive(Debug, PartialEq, Clone)]
                     pub enum Value {
                         StringValue(::std::string::String),
                         BoolValue(bool),
@@ -431,7 +431,7 @@ pub mod opentelemetry_ {
                 }
                 /// ArrayValue is a list of AnyValue messages. We need ArrayValue as a message
                 /// since oneof in AnyValue does not allow repeated fields.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct ArrayValue {
                     /// Array of values. The array may be empty (contain 0 elements).
                     pub r#values: ::std::vec::Vec<AnyValue>,
@@ -521,7 +521,7 @@ pub mod opentelemetry_ {
                 /// a list of KeyValue messages (e.g. in Span) we use `repeated KeyValue` directly to
                 /// avoid unnecessary extra wrapping (which slows down the protocol). The 2 approaches
                 /// are semantically equivalent.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct KeyValueList {
                     /// A collection of key/value pairs of key-value pairs. The list may be empty (may
                     /// contain 0 elements).
@@ -613,7 +613,7 @@ pub mod opentelemetry_ {
                 }
                 /// Represents a key-value pair that is used to store Span attributes, Link
                 /// attributes, etc.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct KeyValue {
                     /// The key name of the pair.
                     /// key_strindex MUST NOT be set if key is used.
@@ -919,7 +919,7 @@ pub mod opentelemetry_ {
                 }
                 /// InstrumentationScope is a message representing the instrumentation scope information
                 /// such as the fully qualified name and version.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct InstrumentationScope {
                     /// A name denoting the Instrumentation scope.
                     /// An empty instrumentation scope name means the name is unknown.
@@ -1199,7 +1199,7 @@ pub mod opentelemetry_ {
                 /// Entity represents an object of interest associated with produced telemetry: e.g spans, metrics, profiles, or logs.
                 ///
                 /// Status: [Development]
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct EntityRef {
                     /// The Schema URL, if known. This is the identifier of the Schema that the entity data
                     /// is recorded in. To learn more about Schema URL see
@@ -1480,7 +1480,7 @@ pub mod opentelemetry_ {
         pub mod resource_ {
             pub mod v1_ {
                 /// Resource information.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Resource {
                     /// Set of attributes that describe the resource.
                     /// Attribute keys MUST be unique (it is not allowed to have more than one
@@ -1696,7 +1696,7 @@ pub mod opentelemetry_ {
                 ///
                 /// When new fields are added into this message, the OTLP request MUST be updated
                 /// as well.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct LogsData {
                     /// An array of ResourceLogs.
                     /// For data coming from a single resource this array will typically contain
@@ -1786,7 +1786,7 @@ pub mod opentelemetry_ {
                     }
                 }
                 /// A collection of ScopeLogs from a Resource.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ResourceLogs {
                     /// The resource for the logs in this message.
                     /// If this field is not set then resource info is unknown.
@@ -2091,7 +2091,7 @@ pub mod opentelemetry_ {
                     }
                 }
                 /// A collection of Logs produced by a Scope.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ScopeLogs {
                     /// The instrumentation scope information for the logs in this message.
                     /// Semantically when InstrumentationScope isn't set, it is equivalent with
@@ -2398,7 +2398,7 @@ pub mod opentelemetry_ {
                 }
                 /// A log record according to OpenTelemetry Log Data Model:
                 /// https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct LogRecord {
                     /// time_unix_nano is the time when the event occurred.
                     /// Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
@@ -3327,7 +3327,7 @@ pub mod opentelemetry_ {
         pub mod collector_ {
             pub mod logs_ {
                 pub mod v1_ {
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct ExportLogsServiceRequest {
                         /// An array of ResourceLogs.
                         /// For data coming from a single resource this array will typically contain one
@@ -3425,7 +3425,7 @@ pub mod opentelemetry_ {
                             size
                         }
                     }
-                    #[derive(Debug, Default)]
+                    #[derive(Debug, Default, Clone)]
                     pub struct ExportLogsServiceResponse {
                         /// The details of a partially successful export request.
                         ///
@@ -3633,7 +3633,7 @@ pub mod opentelemetry_ {
                             }
                         }
                     }
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct ExportLogsPartialSuccess {
                         /// The number of rejected log records.
                         ///
@@ -3821,7 +3821,7 @@ pub mod opentelemetry_ {
             }
             pub mod metrics_ {
                 pub mod v1_ {
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct ExportMetricsServiceRequest {
                         /// An array of ResourceMetrics.
                         /// For data coming from a single resource this array will typically contain one
@@ -3925,7 +3925,7 @@ pub mod opentelemetry_ {
                             size
                         }
                     }
-                    #[derive(Debug, Default)]
+                    #[derive(Debug, Default, Clone)]
                     pub struct ExportMetricsServiceResponse {
                         /// The details of a partially successful export request.
                         ///
@@ -4133,7 +4133,7 @@ pub mod opentelemetry_ {
                             }
                         }
                     }
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct ExportMetricsPartialSuccess {
                         /// The number of rejected data points.
                         ///
@@ -4321,7 +4321,7 @@ pub mod opentelemetry_ {
             }
             pub mod trace_ {
                 pub mod v1_ {
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct ExportTraceServiceRequest {
                         /// An array of ResourceSpans.
                         /// For data coming from a single resource this array will typically contain one
@@ -4419,7 +4419,7 @@ pub mod opentelemetry_ {
                             size
                         }
                     }
-                    #[derive(Debug, Default)]
+                    #[derive(Debug, Default, Clone)]
                     pub struct ExportTraceServiceResponse {
                         /// The details of a partially successful export request.
                         ///
@@ -4627,7 +4627,7 @@ pub mod opentelemetry_ {
                             }
                         }
                     }
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct ExportTracePartialSuccess {
                         /// The number of rejected spans.
                         ///
@@ -4841,7 +4841,7 @@ pub mod opentelemetry_ {
                 ///
                 /// When new fields are added into this message, the OTLP request MUST be updated
                 /// as well.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct MetricsData {
                     /// An array of ResourceMetrics.
                     /// For data coming from a single resource this array will typically contain
@@ -4939,7 +4939,7 @@ pub mod opentelemetry_ {
                     }
                 }
                 /// A collection of ScopeMetrics from a Resource.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ResourceMetrics {
                     /// The resource for the metrics in this message.
                     /// If this field is not set then no resource info is known.
@@ -5244,7 +5244,7 @@ pub mod opentelemetry_ {
                     }
                 }
                 /// A collection of Metrics produced by an Scope.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ScopeMetrics {
                     /// The instrumentation scope information for the metrics in this message.
                     /// Semantically when InstrumentationScope isn't set, it is equivalent with
@@ -5633,7 +5633,7 @@ pub mod opentelemetry_ {
                 /// to support correct rate calculation.  Although it may be omitted
                 /// when the start time is truly unknown, setting StartTimeUnixNano is
                 /// strongly encouraged.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Metric {
                     /// The name of the metric.
                     pub r#name: ::std::string::String,
@@ -6162,7 +6162,7 @@ pub mod opentelemetry_ {
                     /// Data determines the aggregation type (if any) of the metric, what is the
                     /// reported value type for the data points, as well as the relatationship to
                     /// the time interval over which they are reported.
-                    #[derive(Debug, PartialEq)]
+                    #[derive(Debug, PartialEq, Clone)]
                     pub enum Data {
                         Gauge(super::Gauge),
                         Sum(super::Sum),
@@ -6180,7 +6180,7 @@ pub mod opentelemetry_ {
                 /// aggregation, regardless of aggregation temporalities. Therefore,
                 /// AggregationTemporality is not included. Consequently, this also means
                 /// "StartTimeUnixNano" is ignored for all data points.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Gauge {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
@@ -6268,7 +6268,7 @@ pub mod opentelemetry_ {
                 }
                 /// Sum represents the type of a scalar metric that is calculated as a sum of all
                 /// reported measurements over a time interval.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Sum {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
@@ -6484,7 +6484,7 @@ pub mod opentelemetry_ {
                 }
                 /// Histogram represents the type of a metric that is calculated by aggregating
                 /// as a Histogram of all reported measurements over a time interval.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Histogram {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
@@ -6643,7 +6643,7 @@ pub mod opentelemetry_ {
                 }
                 /// ExponentialHistogram represents the type of a metric that is calculated by aggregating
                 /// as a ExponentialHistogram of all reported double measurements over a time interval.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct ExponentialHistogram {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
@@ -6809,7 +6809,7 @@ pub mod opentelemetry_ {
                 /// Summary metrics do not have an aggregation temporality field. This is
                 /// because the count and sum fields of a SummaryDataPoint are assumed to be
                 /// cumulative values.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Summary {
                     /// The time series data points.
                     /// Note: Multiple time series may be included (same timestamp, different attributes).
@@ -6897,7 +6897,7 @@ pub mod opentelemetry_ {
                 }
                 /// NumberDataPoint is a single data point in a timeseries that describes the
                 /// time-varying scalar value of a metric.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct NumberDataPoint {
                     /// The set of key/value pairs that uniquely identify the timeseries from
                     /// where this point belongs. The list may be empty (may contain 0 elements).
@@ -7317,7 +7317,7 @@ pub mod opentelemetry_ {
                 pub mod NumberDataPoint_ {
                     /// The value itself.  A point is considered invalid when one of the recognized
                     /// value fields is not present inside this oneof.
-                    #[derive(Debug, PartialEq)]
+                    #[derive(Debug, PartialEq, Clone)]
                     pub enum Value {
                         AsDouble(f64),
                         AsInt(i64),
@@ -7333,7 +7333,7 @@ pub mod opentelemetry_ {
                 /// If the histogram does not contain the distribution of values, then both
                 /// "explicit_bounds" and "bucket_counts" must be omitted and only "count" and
                 /// "sum" are known.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct HistogramDataPoint {
                     /// The set of key/value pairs that uniquely identify the timeseries from
                     /// where this point belongs. The list may be empty (may contain 0 elements).
@@ -8153,7 +8153,7 @@ pub mod opentelemetry_ {
                 /// summary statistics for a population of values, it may optionally contain the
                 /// distribution of those values across a set of buckets.
                 ///
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ExponentialHistogramDataPoint {
                     /// The set of key/value pairs that uniquely identify the timeseries from
                     /// where this point belongs. The list may be empty (may contain 0 elements).
@@ -9179,7 +9179,7 @@ pub mod opentelemetry_ {
                 pub mod ExponentialHistogramDataPoint_ {
                     /// Buckets are a set of bucket counts, encoded in a contiguous array
                     /// of counts.
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct Buckets {
                         /// The bucket index of the first entry in the bucket_counts array.
                         ///
@@ -9481,7 +9481,7 @@ pub mod opentelemetry_ {
                 /// SummaryDataPoint is a single data point in a timeseries that describes the
                 /// time-varying values of a Summary metric. The count and sum fields represent
                 /// cumulative values.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct SummaryDataPoint {
                     /// The set of key/value pairs that uniquely identify the timeseries from
                     /// where this point belongs. The list may be empty (may contain 0 elements).
@@ -9932,7 +9932,7 @@ pub mod opentelemetry_ {
                     ///
                     /// See the following issue for more context:
                     /// https://github.com/open-telemetry/opentelemetry-proto/issues/125
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone, Copy)]
                     pub struct ValueAtQuantile {
                         /// The quantile of a distribution. Must be in the interval
                         /// [0.0, 1.0].
@@ -10102,7 +10102,7 @@ pub mod opentelemetry_ {
                 /// Exemplars also hold information about the environment when the measurement
                 /// was recorded, for example the span and trace ID of the active span when the
                 /// exemplar was recorded.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Exemplar {
                     /// The set of key/value pairs that were filtered out by the aggregator, but
                     /// recorded alongside the original measurement. Only key/value pairs that were
@@ -10490,7 +10490,7 @@ pub mod opentelemetry_ {
                     /// The value of the measurement that was recorded. An exemplar is
                     /// considered invalid when one of the recognized value fields is not present
                     /// inside this oneof.
-                    #[derive(Debug, PartialEq)]
+                    #[derive(Debug, PartialEq, Clone)]
                     pub enum Value {
                         AsDouble(f64),
                         AsInt(i64),
@@ -10624,7 +10624,7 @@ pub mod opentelemetry_ {
                 ///
                 /// When new fields are added into this message, the OTLP request MUST be updated
                 /// as well.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct TracesData {
                     /// An array of ResourceSpans.
                     /// For data coming from a single resource this array will typically contain
@@ -10716,7 +10716,7 @@ pub mod opentelemetry_ {
                     }
                 }
                 /// A collection of ScopeSpans from a Resource.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ResourceSpans {
                     /// The resource for the spans in this message.
                     /// If this field is not set then no resource info is known.
@@ -11021,7 +11021,7 @@ pub mod opentelemetry_ {
                     }
                 }
                 /// A collection of Spans produced by an InstrumentationScope.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct ScopeSpans {
                     /// The instrumentation scope information for the spans in this message.
                     /// Semantically when InstrumentationScope isn't set, it is equivalent with
@@ -11329,7 +11329,7 @@ pub mod opentelemetry_ {
                 /// A Span represents a single operation performed by a single component of the system.
                 ///
                 /// The next available field id is 17.
-                #[derive(Debug, Default)]
+                #[derive(Debug, Default, Clone)]
                 pub struct Span {
                     /// A unique identifier for a trace. All spans from the same trace share
                     /// the same `trace_id`. The ID is a 16-byte array. An ID with all zeroes OR
@@ -12412,7 +12412,7 @@ pub mod opentelemetry_ {
                 pub mod Span_ {
                     /// Event is a time-stamped annotation of the span, consisting of user-supplied
                     /// text description and key-value pairs.
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct Event {
                         /// The time the event occurred.
                         pub r#time_unix_nano: u64,
@@ -12699,7 +12699,7 @@ pub mod opentelemetry_ {
                     /// different trace. For example, this can be used in batching operations,
                     /// where a single batch handler processes multiple requests from different
                     /// traces or when the handler receives a request from a different project.
-                    #[derive(Debug, Default, PartialEq)]
+                    #[derive(Debug, Default, PartialEq, Clone)]
                     pub struct Link {
                         /// A unique identifier of a trace that this linked span is part of. The ID is a
                         /// 16-byte array.
@@ -13203,7 +13203,7 @@ pub mod opentelemetry_ {
                 }
                 /// The Status type defines a logical error model that is suitable for different
                 /// programming environments, including REST APIs and RPC APIs.
-                #[derive(Debug, Default, PartialEq)]
+                #[derive(Debug, Default, PartialEq, Clone)]
                 pub struct Status {
                     /// A developer-facing human readable error message.
                     pub r#message: ::std::string::String,
